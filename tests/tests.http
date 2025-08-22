@@ -1,0 +1,14 @@
+
+POST http://localhost:7071/api/http_search
+Content-Type: application/json
+
+{
+    "query": "test-snippet"
+}
+###
+POST http://localhost:7071/api/http_search_by_doc_id
+Content-Type: application/json
+
+{
+    "doc_id": "6405b800-c0a0-4cae-bd0c-576569e68e6d"
+}

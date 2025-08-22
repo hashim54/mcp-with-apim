@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API",
+    "version": "1.0.0",
+    "description": "Auto-generated OpenAPI documentation. Markdown supported in descriptions (CommonMark)."
+  },
+  "paths": {
+    "/api/http_search": {
+      "post": {
+        "summary": "Search for documents",
+        "description": "Searches documents using a natural language query with embeddings for semantic relevance.",
+        "operationId": "http_search",
+        "tags": ["Search"],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Response model for search results",
+                  "properties": {
+                    "documents": {
+                      "description": "List of documents matching the search query",
+                      "items": {
+                        "$ref": "#/components/schemas/Document"
+                      },
+                      "title": "Documents",
+                      "type": "array"
+                    }
+                  },
+                  "required": ["documents"],
+                  "title": "SearchResponse",
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": { "description": "Invalid request" },
+          "500": { "description": "Internal server error" }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "query": {
+                    "description": "The search query",
+                    "title": "Query",
+                    "type": "string"
+                  }
+                },
+                "required": ["query"],
+                "title": "SearchRequest",
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/http_search_by_doc_id": {
+      "post": {
+        "summary": "Get a document by its ID",
+        "description": "Fetches a specific document by its unique identifier.",
+        "operationId": "http_search_by_doc_id",
+        "tags": ["Search"],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "Response model for search results",
+                  "properties": {
+                    "documents": {
+                      "description": "List of documents matching the search query",
+                      "items": {
+                        "$ref": "#/components/schemas/Document"
+                      },
+                      "title": "Documents",
+                      "type": "array"
+                    }
+                  },
+                  "required": ["documents"],
+                  "title": "SearchResponse",
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": { "description": "Invalid request" },
+          "500": { "description": "Internal server error" }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "doc_id": {
+                    "description": "The document ID to retrieve",
+                    "title": "Doc Id",
+                    "type": "string"
+                  }
+                },
+                "required": ["doc_id"],
+                "title": "SearchByIdRequest",
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Document": {
+        "description": "Document model for Azure Search",
+        "properties": {
+          "id": {
+            "description": "Unique identifier for the document",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "description": "Name of the document",
+            "title": "Name",
+            "type": "string"
+          },
+          "content": {
+            "description": "Content of the document",
+            "title": "Content",
+            "type": "string"
+          },
+          "architecture_url": {
+            "description": "URL to the architecture diagram",
+            "title": "Architecture Url",
+            "type": "string"
+          },
+          "score": {
+            "description": "Search score for the document",
+            "title": "Score",
+            "type": "number"
+          }
+        },
+        "required": ["id", "name", "content", "architecture_url", "score"],
+        "title": "Document",
+        "type": "object"
+      }
+    }
+  }
+}
