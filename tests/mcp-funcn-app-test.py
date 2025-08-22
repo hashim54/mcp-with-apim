@@ -1,11 +1,17 @@
 import json, threading, requests, uuid, time
 from urllib.parse import urljoin
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).resolve().with_name(".env"))
+
+FUNCTION_KEY = os.getenv("FUNCTION_KEY", "")
 
 class MCPClientError(Exception): ...
 
 class MCPClient:
     def __init__(self, base_sse_url: str, function_key: str | None = None, timeout=30):
-        # base_sse_url: https://mcp-test-app1923.azurewebsites.net/runtime/webhooks/mcp/sse?code=4g5ubIpBtocZnIWai5X5C0puyU809W5f4OWUKVwG1-EPAzFug0AGOg==
         self.base_sse_url = base_sse_url
         self.function_key = function_key
         self.timeout = timeout
@@ -143,7 +149,6 @@ class MCPClient:
             self._listener_thread.join(timeout=1)
 
 if __name__ == "__main__":
-    FUNCTION_KEY = "4g5ubIpBtocZnIWai5X5C0puyU809W5f4OWUKVwG1-EPAzFug0AGOg=="
     sse_url = f"https://mcp-test-app1923.azurewebsites.net/runtime/webhooks/mcp/sse?code={FUNCTION_KEY}"
     client = MCPClient(sse_url, function_key=FUNCTION_KEY)
     client.connect()
