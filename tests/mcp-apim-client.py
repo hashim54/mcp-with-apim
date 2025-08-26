@@ -13,7 +13,7 @@ APIM_HOST = os.getenv("APIM_HOST", "")
 
 async def main():
     # Connect to a streamable HTTP server
-    async with streamablehttp_client(APIM_HOST) as (read_stream, write_stream, _):
+    async with streamablehttp_client(APIM_HOST, {"Ocp-Apim-Subscription-Key": os.getenv("APIM_SUBSCRIPTION_KEY", "")}) as (read_stream, write_stream, _):
         # Create a session using the client streams
         async with ClientSession(read_stream, write_stream) as session:
             # Initialize the connection
